@@ -16,12 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->integer('pages');
             $table->integer('year');
-            $table->foreignId('author_id');
-            $table->foreign('author_id')->on('authors')->references('id')
-                    ->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('category_id');
-            $table->foreign('category_id')->on('categories')->references('id')
-                    ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

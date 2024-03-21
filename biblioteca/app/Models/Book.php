@@ -12,14 +12,19 @@ class Book extends Model
 {
     use HasFactory;
 
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function authors(): HasMany
+    {
+        return $this->hasMany(Author::class);
+    }
+
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
-    }
-
-    public function authors(): BelongsTo
-    {
-        return $this->belongsTo(Author::class);
     }
 
    

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class AuthorFactory extends Factory
         return [
             'name' => fake()->name(),
             'city' => fake()->city(),
+            'book_id' => Book::get()->random()->id,
             'created_at' => fake()->datetime()
         ];
     }

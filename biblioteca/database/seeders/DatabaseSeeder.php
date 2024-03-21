@@ -22,10 +22,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            BookSeeder::class,
+            ReservationSeeder::class,
             CategorySeeder::class,
             AuthorSeeder::class,
-            BookSeeder::class,
-            ReservationSeeder::class
+            
         ]);
     }
 

@@ -22,8 +22,6 @@ class BookFactory extends Factory
             'title' => fake()->unique()->text(20),
             'pages' => fake()->numberBetween(100, 680),
             'year' => fake()->numberBetween(1960, 2023),
-            'author_id' => Author::get()->random()->id,
-            'category_id' => Category::get()->random()->id,
             'created_at' => fake()->datetime()
         ];
     }

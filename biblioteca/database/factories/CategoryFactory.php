@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,8 @@ class CategoryFactory extends Factory
         $categories = ['Horror', 'Fantasy', 'Fiction', 'Romance', 'Mystery', 'History'];
         return [
             'name' => fake()->randomElement($categories),
-            'created_at' => fake()->datetime()
+            'created_at' => fake()->datetime(),
+            'book_id' => Book::get()->random()->id
         ];
     }
 }

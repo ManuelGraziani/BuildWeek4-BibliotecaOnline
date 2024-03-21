@@ -18,10 +18,12 @@ class ReservationFactory extends Factory
      */
     public function definition(): array
     {
+        $stato = ['disponibile', 'in prestito', 'non disponibile'];
         return [
             'user_id' => User::get()->random()->id,
             'book_id' => Book::get()->random()->id,
-            'created_at' => now()
+            'created_at' => now(),
+            'stato'=> fake()->randomElement($stato)
         ];
     }
 }

@@ -6,18 +6,16 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\User;
 
 class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Author $authors)
+    public function index()
     {
-        return view('books', [
-            'books' => $this->getBooks(),
-            'authors' => $authors->all()
-        ]);
+        return view('books', ['books' => Book::with('authors', 'categories','reservations')->get(),'users' => User::all()]);
 
     }
 
