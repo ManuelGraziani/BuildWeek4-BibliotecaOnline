@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
-    <h1>Library</h1>
-
-
     <div class="col">
+    <h1>Library</h1>
+    <form action="search">
+                    <label for="search">Search</label>
+                    <input type="text" id="search" name="search" placeholder="Search">
+                </form>
         @foreach($books as $key => $value)
         <div class="card">
             <img src="https://www.lumien.it/wp-content/uploads/2022/01/Come-promuovere-un-libro.jpg" class="card-img-top" alt="...">
@@ -50,9 +50,22 @@
     </div>
     @endforeach
 
+    <script>
 
+        const search = document.getElementById('search');
+        const cards_titles = document.querySelectorAll('.card-title');
 
-
+        search.addEventListener('input', (e) => {
+            const value = e.target.value.toLowerCase(); // Convert input value to lowercase for case-insensitive search
+            cards_titles.forEach(card_title => {
+                const card = card_title.closest('.card'); // Get the closest parent .card element
+                if (card_title.textContent.toLowerCase().includes(value)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
