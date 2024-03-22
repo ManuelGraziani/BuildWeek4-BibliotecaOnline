@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Laravel App</a>
@@ -15,11 +14,25 @@
                     <a class="nav-link btn btn-outline-success text-white" aria-current="page" href="/books/create">Aggiungi libro<i class="bi bi-book ms-2"></i></a>
                 </li>
                 @endif
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{Auth::user()->name}}
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{route('profile.edit')}}">Profilo</a></li>
+                        <form method="POST" action="{{route('logout')}}">
+                            @csrf
+                            <li><button type="submit" class="dropdown-item" >Log out</button=></li>
+                        </form>
+
+                    </ul>
+                </li>
             </ul>
+
             <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" id="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-      </form>
+                <input class="form-control me-2" type="search" id="search" placeholder="Search" aria-label="Search">
+            </form>
         </div>
     </div>
 </nav>

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/books');
 });
 
 Route::get('/dashboard', function () {
@@ -31,5 +31,8 @@ Route::middleware('auth')->group(function () {
 Route::resource('/books', \App\Http\Controllers\BookController::class)->middleware(['auth', 'verified']);
 
 Route::resource('/authors', \App\Http\Controllers\AuthorController::class)->middleware(['auth', 'verified']);
+
+
+Route::resource('/reservations', \App\Http\Controllers\ReservationController::class)->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
