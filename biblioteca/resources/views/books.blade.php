@@ -17,7 +17,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="border-0">{{$value->title}}</td>
+                                        <td class="border-0" id="card-title">{{$value->title}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -32,7 +32,7 @@
                                 <tbody>
                                     @foreach ($value->authors as $user)
                                     <tr>
-                                        <td class="border-0">{{$user->name}}</td>
+                                        <td class="border-0" id="card-author">{{$user->name}}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
