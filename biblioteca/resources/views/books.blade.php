@@ -89,6 +89,9 @@
 
                     </div>
                     @endif
+                    <div class="d-grid gap-2 mt-3">
+                    <a class="btn btn-dark" href="/books/{{$value->id}}">Dettagli</a></div>
+                    
                 </div>
             </div>
         </div>
