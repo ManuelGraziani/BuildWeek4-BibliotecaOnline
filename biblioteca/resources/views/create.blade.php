@@ -24,12 +24,12 @@
         <label for="exampleInputPassword1" class="form-label">Categoria</label>
         <select class="form-select" aria-label="Default select example" name="category">
             <option selected>Scegli categoria</option>
-            <option value="1" name="category">Horror</option>
-            <option value="2" name="category">Fantasy</option>
-            <option value="3" name="category">Fiction</option>
-            <option value="4" name="category">Romance</option>
-            <option value="5" name="category">Mystery</option>
-            <option value="6" name="category">History</option>
+            <option value="Horror" >Horror</option>
+            <option value="Fantasy" >Fantasy</option>
+            <option value="Fiction" >Fiction</option>
+            <option value="Romance" >Romance</option>
+            <option value="Mystery" >Mystery</option>
+            <option value="History" >History</option>
         </select>
     </div>
     <div class="mb-3">
