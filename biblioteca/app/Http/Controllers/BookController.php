@@ -39,8 +39,10 @@ class BookController extends Controller
      * Display the specified resource.
      */
     public function show(Book $book)
-    {
-        //
+    {  
+        $book = Book::with('authors', 'categories')->findOrFail($book->id);
+       //return $book;
+        return view('detailpage', ['book' => $book]);
     }
 
     /**
