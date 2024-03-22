@@ -12,6 +12,14 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'pages',
+        'year',
+        'description',
+        'numcopies'
+    ];
+
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
