@@ -10,6 +10,7 @@
                     <h5 class="card-title">Nome Libro :{{$value->title}}</h5>
                     <p class="card-text">ID libro :{{$value->id}}</p>
                     <p class="card-text">Pagine :{{$value->pages}}</p>
+                    <p class="card-text">Numero di Copie :{{$value->numcopies}}</p>
                     <p class="card-text">Anno pubblicazione : {{$value->year}}</p>
 
                     @foreach ($value->authors as $user)
