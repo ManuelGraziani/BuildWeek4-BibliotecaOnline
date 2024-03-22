@@ -10,6 +10,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/books">Home</a>
                 </li>
+                @if(Auth::user()->isAdmin === 1)
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-success text-white" aria-current="page" href="/books/create">Aggiungi libro<i class="bi bi-book ms-2"></i></a>
+                </li>
+                @endif
             </ul>
             <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

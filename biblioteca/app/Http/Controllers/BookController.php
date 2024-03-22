@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\User;
 
 class BookController extends Controller
@@ -24,7 +25,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -32,8 +33,33 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        //
+        // Crea un nuovo libro
+        $book = new Book();
+        $book->title = $request->title;
+        $book->description = $request->description;
+        $book->year = $request->year;
+        $book->pages = $request->pages;
+        $book->numcopies = $request->numcopies;
+        $book->save(); // Assicurati che il libro sia salvato per generare un ID
+    
+        // Supponendo che tu voglia creare un nuovo autore e associarlo al libro appena creato
+        $author = new Author();
+        $author->name = $request->author; // o qualsiasi altro campo hai per l'autore
+        $author->city = $request->city; // Assumendo che tu voglia salvare anche la città
+        $author->book_id = $book->id; // Associa l'ID del libro appena creato
+        $author->save();
+    
+        // Supponendo che tu voglia creare una nuova categoria e associarla al libro appena creato
+        $category = new Category();
+        $category->name = $request->category; // o qualsiasi altro campo hai per la categoria
+        $category->book_id = $book->id; // Associa l'ID del libro appena creato
+        $category->save();
+    
+        return redirect('/books');
     }
+    
+    
+
 
     /**
      * Display the specified resource.
@@ -48,7 +74,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('edit', ['book' => $book]);
     }
 
     /**
@@ -56,7 +82,12 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $book['title'] = $request->title;
+        $book['description'] = $request->description;
+
+        $book->update();
+        return redirect('/books');
+
     }
 
     /**
@@ -64,6 +95,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return redirect('/books');
     }
 }

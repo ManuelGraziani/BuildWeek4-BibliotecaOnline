@@ -28,8 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/books', \App\Http\Controllers\BookController::class);
+Route::resource('/books', \App\Http\Controllers\BookController::class)->middleware(['auth', 'verified']);
 
-Route::resource('/authors', \App\Http\Controllers\AuthorController::class);
+Route::resource('/authors', \App\Http\Controllers\AuthorController::class)->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
