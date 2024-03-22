@@ -14,7 +14,7 @@
                     <p class="card-text">Anno pubblicazione : {{$value->year}}</p>
 
                     @foreach ($value->authors as $user)
-                    <p class="card-text">Autore : {{$user->name}}</p>
+                    <p class="card-text" id="card-author">Autore : {{$user->name}}</p>
                     @endforeach
 
                     @foreach ($value->categories as $categoriesItem)
@@ -51,20 +51,3 @@
         @endforeach
     </div>
     @endsection
-
-    <script>
-        const search = document.getElementById('search');
-        const cards_titles = document.querySelectorAll('.card-title');
-
-        search.addEventListener('input', (e) => {
-            const value = e.target.value.toLowerCase(); // Convert input value to lowercase for case-insensitive search
-            cards_titles.forEach(card_title => {
-                const card = card_title.closest('.card'); // Get the closest parent .card element
-                if (card_title.textContent.toLowerCase().includes(value)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
