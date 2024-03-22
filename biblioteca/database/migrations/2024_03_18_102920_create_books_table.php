@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->integer('pages');
             $table->integer('year');
+            $table->text('description');
+            $table->integer('numcopies');
             $table->timestamps();
         });
     }

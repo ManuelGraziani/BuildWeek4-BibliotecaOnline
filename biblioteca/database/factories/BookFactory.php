@@ -18,11 +18,14 @@ class BookFactory extends Factory
      */
     public function definition(): array
     {
+        
         return [
             'title' => fake()->unique()->text(20),
             'pages' => fake()->numberBetween(100, 680),
             'year' => fake()->numberBetween(1960, 2023),
-            'created_at' => fake()->datetime()
+            'created_at' => fake()->datetime(),
+            'description'=> fake()->unique()->text(150),
+            'numcopies' => fake()->numberBetween(1, 5)
         ];
     }
 }
