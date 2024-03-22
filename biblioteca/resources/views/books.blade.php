@@ -78,13 +78,20 @@
                                 @endforeach
                             </div>
                         </div>
+                    @if(Auth::user()->isAdmin === 1)
+                    <div class="d-flex">
+                        <a type="button" class="btn btn-outline-warning h-25 mx-2" href="/books/{{$value->id}}/edit"><i class="bi bi-pencil"></i></a>
+                        <form method="POST" action="/books/{{$value->id}}">
+                            @csrf
+                            @method ('DELETE')
+                            <button type="submit" class="btn btn-outline-danger" ><i class="bi bi-trash"></i></button>
+                        </form>
+
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
         @endforeach
     </div>
     @endsection
-
-
-    
-
