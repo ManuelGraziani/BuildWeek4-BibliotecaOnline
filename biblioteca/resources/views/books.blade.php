@@ -12,7 +12,7 @@
                             <table class="table text-start">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Title</th>
+                                        <th scope="col" class="fs-5">Titolo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -22,60 +22,72 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col">
+                        <div class="col-7">
                             <table class="table text-end">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Authors</th>
+                                        <th scope="col" class="fs-5">Autore</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($value->authors as $user)
-                                    <tr>
-                                        <td class="border-0" id="card-author">{{$user->name}}</td>
-                                    </tr>
-                                    @endforeach
+                                    @if($value->authors->isNotEmpty())
+                                        <tr>
+                                            <td class="border-0" id="card-author">{{$value->authors->random()->name}}</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td class="border-0">Nessun autore</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
 
                     <div class="row border-top border-bottom">
-                        <div class="col">
+                        <div class="col-8 my-3">
                             <h5>Dettagli</h5>
                             <p class="card-text">Pagine :{{$value->pages}}</p>
                             <p class="card-text">Anno pubblicazione : {{$value->year}}</p>
                         </div>
-                        <div class="col text-end">
+                        <div class="col text-end my-3">
                             <ul class="list-group">
                                 <h5>Categoria</h5>
-
-                                @foreach ($value->categories as $categoriesItem)
-                                <li class="list-group-item border-0">{{$categoriesItem->name}}</li>
-                                @endforeach
+                                @if($value->categories->isNotEmpty())
+                                    {{-- Prende una categoria a caso --}}
+                                    <li class="list-group-item border-0">{{$value->categories->random()->name}}</li>
+                                @else
+                                    <li class="list-group-item border-0">Nessuna categoria</li>
+                                @endif
                             </ul>
-
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h5>Stato</h5>
-                            @foreach ($value->reservations as $reservations)
-                            @if($reservations->book_id === $value->id)
-                            <p class="card-text">Prenotazioni : {{$reservations->stato}}</p>
-                            <p class="card-text">ID Utente Prenotazione : {{$reservations->user_id}}</p>
+                            <h5 class="mt-3">Stato</h5>
+                           
+                            @if($value->reservations[0]->book_id === $value->id)
+                                @php
+                                    $statoPrenotazione = $value->numcopies > 0 ? 'Disponibile' : 'Non disponibile';
+                                @endphp
+                                <p class="card-text">Prenotazioni : {{ $statoPrenotazione }}</p>
                             @endif
-                            @endforeach
+                      
                             <div class="d-flex justify-content-between align-items-center my-3">
 
 
                                 <p class="card-text m-0">Numero di Copie :{{$value->numcopies}}</p>
                                 @if($value->numcopies >= 1)
+                              
+                                <form method="POST" action="/reservations" id="reservationForm">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$value->id}}">
+                                    <span>
+                                        <button class="btn btn-outline-primary" type="submit">Prenota</button>
+                                    </span>
+                                </form>
 
-                                <span>
-                                    <a class="btn btn-outline-primary" href="">Prenota</a>
-                                </span>
                                 @else
                                 <span>
                                     <button type="button" class="btn btn-danger" disabled>Non disponibile</button>
@@ -83,13 +95,6 @@
 
                                 @endif
                             </div>
-                            @foreach($value->reservations as $reservation)
-                            @foreach($users as $user)
-                            @if($reservation->user_id === $user->id)
-                            <p class="card-text">Nome Utente: {{$user->name}}</p>
-                            @endif
-                            @endforeach
-                            @endforeach
                         </div>
                     </div>
                     @if(Auth::user()->isAdmin === 1)
