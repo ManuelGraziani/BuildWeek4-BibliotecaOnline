@@ -32,6 +32,7 @@ Route::resource('/books', \App\Http\Controllers\BookController::class)->middlewa
 
 Route::resource('/authors', \App\Http\Controllers\AuthorController::class)->middleware(['auth', 'verified']);
 
+Route::resource('/users', \App\Http\Controllers\UserManageController::class)->middleware(['auth', 'verified']);
 
 Route::resource('/reservations', \App\Http\Controllers\ReservationController::class)->middleware(['auth', 'verified']);
 
