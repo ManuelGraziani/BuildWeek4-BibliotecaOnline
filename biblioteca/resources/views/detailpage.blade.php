@@ -24,14 +24,32 @@
                     
                   
                     <h2 class="mt-5">
-                        @if ($book->numcopies === '0')
-                        <p class="text-danger">non disponibile</p>
-                        @else
-                        <p class="text-success fs-5"> Disponibile</p>
-                       <!--  link da collegare con l'id  -->
-                        <a  class = "btn btn-success btn-rounded" href="#{{$book->id}}">Prenota</a>
-                        
-                        @endif
+                    @php
+                        $userId = Auth::id(); // Assumendo che Auth sia disponibile
+                        // Controlla se l'utente corrente ha già prenotato questo libro
+                        $hasReserved = $book->reservations->contains('user_id', $userId);
+                    @endphp
+
+                    @if($hasReserved)
+                        <p>Già Prenotato</p>
+                        <span>
+                            <button type="button" class="btn btn-secondary" disabled>Hai già prenotato</button>
+                        </span>
+                    @elseif($book->numcopies >= 1)
+                        <p>Disponibile</p>
+                        <form method="POST" action="/reservations" id="reservationForm">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$book->id}}">
+                            <span>
+                                <button class="btn btn-outline-primary" type="submit">Prenota</button>
+                            </span>
+                        </form>
+                    @else
+                        <p>Non disponibile</p>
+                        <span>
+                            <button type="button" class="btn btn-danger" disabled>Non disponibile</button>
+                        </span>
+                    @endif
                     </h2>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">

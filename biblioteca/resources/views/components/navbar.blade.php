@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link btn btn-outline-success text-white" aria-current="page" href="/books/create">Aggiungi libro<i class="bi bi-book ms-2"></i></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-success text-white" aria-current="page" href="/reservations">Elenco Prenotazioni<i class="bi bi-list-check ms-2"></i></a>
+                </li>
                 @endif
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

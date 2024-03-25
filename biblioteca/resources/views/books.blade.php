@@ -66,12 +66,13 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="mt-3">Stato</h5>
-                           
+                           @if($value->reservations->isNotEmpty())
                             @if($value->reservations[0]->book_id === $value->id)
                                 @php
                                     $statoPrenotazione = $value->numcopies > 0 ? 'Disponibile' : 'Non disponibile';
                                 @endphp
                                 <p class="card-text">Prenotazioni : {{ $statoPrenotazione }}</p>
+                            @endif
                             @endif
                       
                             <div class="d-flex justify-content-between align-items-center my-3">
@@ -83,9 +84,27 @@
                                 <form method="POST" action="/reservations" id="reservationForm">
                                     @csrf
                                     <input type="hidden" name="id" value="{{$value->id}}">
+
+                                   @php
+                                    // Supponendo di avere l'ID dell'utente corrente
+                                    $userId = Auth::id();
+
+                                    // Verifica se l'utente ha già prenotato questo libro
+                                    $hasReserved = $value->reservations->contains(function ($reservation) use ($userId) {
+                                        return $reservation->user_id === $userId;
+                                    });
+                                    @endphp
+
+                                @if($hasReserved)
+                                    <span>
+                                        <button class="btn btn-outline-primary" type="submit" disabled>Hai già prenotato</button>
+                                    </span>
+                                @else
                                     <span>
                                         <button class="btn btn-outline-primary" type="submit">Prenota</button>
                                     </span>
+                                @endif
+
                                 </form>
 
                                 @else
