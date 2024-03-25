@@ -16,8 +16,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('books', ['books' => Book::with('authors', 'categories','reservations')->get(),'users' => User::all()]);
-
+        return view('books', ['books' => Book::with('authors', 'categories', 'reservations')->get(), 'users' => User::all()]);
     }
 
     /**
@@ -41,33 +40,33 @@ class BookController extends Controller
         $book->pages = $request->pages;
         $book->numcopies = $request->numcopies;
         $book->save(); // Assicurati che il libro sia salvato per generare un ID
-    
+
         // Supponendo che tu voglia creare un nuovo autore e associarlo al libro appena creato
         $author = new Author();
         $author->name = $request->author; // o qualsiasi altro campo hai per l'autore
         $author->city = $request->city; // Assumendo che tu voglia salvare anche la città
         $author->book_id = $book->id; // Associa l'ID del libro appena creato
         $author->save();
-    
+
         // Supponendo che tu voglia creare una nuova categoria e associarla al libro appena creato
         $category = new Category();
         $category->name = $request->category; // o qualsiasi altro campo hai per la categoria
         $category->book_id = $book->id; // Associa l'ID del libro appena creato
         $category->save();
-    
+
         return redirect('/books');
     }
-    
-    
+
+
 
 
     /**
      * Display the specified resource.
      */
     public function show(Book $book)
-    {  
-        $book = Book::with('authors', 'categories','reservations')->findOrFail($book->id);
-       //return $book;
+    {
+        $book = Book::with('authors', 'categories', 'reservations')->findOrFail($book->id);
+        //return $book;
         return view('detailpage', ['book' => $book]);
     }
 
@@ -84,13 +83,39 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        $book['title'] = $request->title;
-        $book['description'] = $request->description;
+        // Ottieni l'ID originario del libro
+        $originalBookId = $book->id;
 
-        $book->update();
-        return redirect('/books');
+        // Aggiorna i campi del libro
+        $book->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'year' => $request->year,
+            'pages' => $request->pages,
+            'numcopies' => $request->numcopies,
+            'updated_at' => now(),
+        ]);
 
+        // Verifica se il campo category è stato inviato nel form
+        if ($request->has('category')) {
+            // Aggiorna anche la tabella categories solo se il campo category è stato modificato
+            $book->categories()->update([
+                'name' => $request->category,
+                'updated_at' => now(),
+            ]);
+        }
+
+        // Aggiorna anche la tabella authors
+        $book->authors()->update([
+            'name' => $request->author,
+            'city' => $request->city, // Assumendo che tu abbia un campo city nell'autore
+            'updated_at' => now(),
+        ]);
+
+        // Reindirizza alla pagina desiderata dopo l'aggiornamento
+        return redirect('/books')->with('success', 'Libro aggiornato con successo!');
     }
+
 
     /**
      * Remove the specified resource from storage.
