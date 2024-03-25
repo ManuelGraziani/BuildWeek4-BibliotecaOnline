@@ -18,7 +18,7 @@ class UserManageController extends Controller
         if (auth()->user()->isAdmin == 1) {
             
             $users = User::all(); 
-            return view('usersmanagepage', ['users' => $users]);
+            return view('usersManagePage', ['users' => $users]);
         } else {
            
             return redirect('/books'); 
