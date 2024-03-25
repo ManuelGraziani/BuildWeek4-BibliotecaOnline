@@ -24,8 +24,8 @@
                     
                   
                     <h2 class="mt-5">
-                        @if ($book->numcopies === '0')
-                        <p class="text-danger">non disponibile</p>
+                        @if ($book->numcopies == '0')
+                        <p class="text-danger fs-5">non disponibile</p>
                         @else
                         <p class="text-success fs-5"> Disponibile</p>
                        <!--  link da collegare con l'id  -->
