@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class UserManageController extends Controller
@@ -60,7 +61,8 @@ class UserManageController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $book = User::with('reservations')->findOrFail($user->id) ;
+        return $book;
     }
 
     /**

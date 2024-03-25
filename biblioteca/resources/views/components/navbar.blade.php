@@ -24,7 +24,9 @@
                         <form method="POST" action="{{route('logout')}}">
                             @csrf
                             <li><button type="submit" class="dropdown-item" >Log out</button=></li>
+                        
                         </form>
+                        <li><a class="dropdown-item" href="/users">Amministrazione Utenti</a></li>
 
                     </ul>
                 </li>
