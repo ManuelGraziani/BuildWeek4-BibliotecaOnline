@@ -24,12 +24,13 @@
                 <td>{{ $user->isAdmin ? 'Si' : 'No' }}</td>
 
                 
-                <td class="text-center"><a class="btn btn-info text-white text-center"  href="{{ route('users.edit', $user->id) }}"><i class="bi bi-pencil mx-auto"></i></button></td>
+                <td class="text-center"><a class="btn btn-warning text-white text-center"  href="{{ route('users.edit', $user->id) }}"><i class="bi bi-pencil mx-auto"></i></button></td>
                 <td class="text-center"><form method="POST" action="/users/{{$user->id}}">
                             @csrf
                             @method ('DELETE')
                             <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
                         </form></td>
+                        <td class="text-center"><a class="btn btn-info text-white text-center"  href="{{ route('users.show', $user->id) }}"><i class="bi bi-eye mx-auto"></i></button></td>
             </tr>
             @endforeach
            
