@@ -66,7 +66,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {  
-        $book = Book::with('authors', 'categories')->findOrFail($book->id);
+        $book = Book::with('authors', 'categories','reservations')->findOrFail($book->id);
        //return $book;
         return view('detailpage', ['book' => $book]);
     }
