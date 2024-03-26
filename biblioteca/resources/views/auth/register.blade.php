@@ -47,6 +47,8 @@
             <x-primary-button class="ms-4">
                 {{ __('Register') }}
             </x-primary-button>
+            <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-black p-3 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+
         </div>
     </form>
 </x-guest-layout>

@@ -29,7 +29,9 @@
                             <li><button type="submit" class="dropdown-item" >Log out</button=></li>
                         
                         </form>
+                        @if(Auth::user()->isAdmin === 1)
                         <li><a class="dropdown-item" href="/users">Amministrazione Utenti</a></li>
+                        @endif
 
                     </ul>
                 </li>
