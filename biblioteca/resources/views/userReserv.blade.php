@@ -2,7 +2,7 @@
 @section('title', 'User Reservations')
 
 @section('content')
-    <div class="row">
+    <div class="row row-cols-2 row-cols-md-3 g-4">
     @foreach($books as $key => $value)
         @foreach($reservations as $key => $res)
             @if($value->id == $res->book_id)
