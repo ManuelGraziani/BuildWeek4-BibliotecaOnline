@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link } from "@inertiajs/react";
 
 export default function BookComponent({ books, users }) {
     console.log(books);
@@ -9,6 +10,7 @@ export default function BookComponent({ books, users }) {
     return (
         <AuthenticatedLayout>
             <div className="container">
+                <Link method="get" href='/books/create' as="button" type="button">Aggiungi Libro</Link>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     {books.map((book) => (
                         <div class="col">

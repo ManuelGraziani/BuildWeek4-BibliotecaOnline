@@ -29,7 +29,16 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/books', [\App\Http\Controllers\BookController::class, 'index'])->name('books.index');
+Route::get('/books/create', [\App\Http\Controllers\BookController::class, 'create'])->middleware(['auth', 'verified'])->name('books.create');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/books', [\App\Http\Controllers\BookController::class, 'index'])->name('books.index');
+    Route::get('/books/{book}', [\App\Http\Controllers\BookController::class, 'show'])->name('books.show');
+    Route::post('/books', [\App\Http\Controllers\BookController::class, 'store'])->name('books.store');
+    Route::get('/books/{book}/edit', [\App\Http\Controllers\BookController::class, 'edit'])->name('books.edit');
+    Route::put('/books/{book}', [\App\Http\Controllers\BookController::class, 'update'])->name('books.update');
+    Route::delete('/books/{book}', [\App\Http\Controllers\BookController::class, 'destroy'])->name('books.destroy');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,4 +46,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

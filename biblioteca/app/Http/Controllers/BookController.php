@@ -28,7 +28,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return Inertia::render('Books/BookCreate');
     }
 
     /**
@@ -36,29 +36,63 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        // Crea un nuovo libro
-        $book = new Book();
-        $book->title = $request->title;
-        $book->description = $request->description;
-        $book->year = $request->year;
-        $book->pages = $request->pages;
-        $book->numcopies = $request->numcopies;
-        $book->save(); // Assicurati che il libro sia salvato per generare un ID
+        /* // Crea il libro e ottieni l'istanza del libro creato
+        $book = Book::create($request->validate([
+            'title' => ['required', 'max:50'],
+            'description' => ['required', 'max:255'],
+            'year' => ['required', 'max:4'],
+            'pages' => ['required', 'max:4'],
+            'numcopies' => ['required', 'max:4'],
+            'author' => ['required', 'max:50'],
+            'city' => ['required', 'max:50'],
+            'category' => ['required', 'max:50'],
+        ]));
 
-        // Supponendo che tu voglia creare un nuovo autore e associarlo al libro appena creato
-        $author = new Author();
-        $author->name = $request->author; // o qualsiasi altro campo hai per l'autore
-        $author->city = $request->city; // Assumendo che tu voglia salvare anche la città
-        $author->book_id = $book->id; // Associa l'ID del libro appena creato
-        $author->save();
+        // Crea l'autore associato al libro
+        $author = Author::create($request->validate([
+            'author' => ['required', 'max:50'],
+            'city' => ['required', 'max:50'],
+        ]));
 
-        // Supponendo che tu voglia creare una nuova categoria e associarla al libro appena creato
-        $category = new Category();
-        $category->name = $request->category; // o qualsiasi altro campo hai per la categoria
-        $category->book_id = $book->id; // Associa l'ID del libro appena creato
-        $category->save();
+        // Associa l'autore al libro appena creato
+        $book->author()->associate($author)->save();
 
-        return redirect('/books');
+        // Crea la categoria associata al libro
+        $category = Category::create($request->validate([
+            'category' => ['required', 'max:50'],
+        ]));
+
+        // Associa la categoria al libro appena creato
+        $book->category()->associate($category)->save();
+
+        // Ritorna alla vista dei libri
+        return redirect()->route('books.index'); */
+
+        $book = Book::create($request->validate([
+            'title' => ['required', 'max:50'],
+            'description' => ['required', 'max:255'],
+            'year' => ['required', 'max:4'],
+            'pages' => ['required', 'max:4'],
+            'numcopies' => ['required', 'max:4'],
+        ]));
+
+
+        // Creazione dell'autore associato al libro
+        $author = new Author([
+            'name' => $request->input('name'), // Assicurati di avere un campo 'name' nel tuo form
+            'city' => $request->input('city'), // Assicurati di avere un campo 'city' nel tuo form
+        ]);
+        $book->authors()->save($author);
+
+        // Creazione della categoria
+        $category = new Category([
+            'name' => $request->input('category'), // Assicurati di avere un campo 'category' nel tuo form
+        ]);
+        $book->categories()->save($category);
+
+
+
+        return to_route('books.index');
     }
 
 
