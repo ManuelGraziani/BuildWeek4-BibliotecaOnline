@@ -16,7 +16,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('books', ['books' => Book::with('authors', 'categories', 'reservations')->get(), 'users' => User::all()]);
+        // return dd(Book::with('authors', 'categories', 'reservations')->paginate(3));
+        return view('books', ['books' => Book::with('authors', 'categories', 'reservations')->simplePaginate(3), 'users' => User::all()]);
     }
 
     /**
@@ -39,26 +40,23 @@ class BookController extends Controller
         $book->year = $request->year;
         $book->pages = $request->pages;
         $book->numcopies = $request->numcopies;
-        $book->save(); // Assicurati che il libro sia salvato per generare un ID
+        $book->save();  // Assicurati che il libro sia salvato per generare un ID
 
         // Supponendo che tu voglia creare un nuovo autore e associarlo al libro appena creato
         $author = new Author();
-        $author->name = $request->author; // o qualsiasi altro campo hai per l'autore
-        $author->city = $request->city; // Assumendo che tu voglia salvare anche la città
-        $author->book_id = $book->id; // Associa l'ID del libro appena creato
+        $author->name = $request->author;  // o qualsiasi altro campo hai per l'autore
+        $author->city = $request->city;  // Assumendo che tu voglia salvare anche la città
+        $author->book_id = $book->id;  // Associa l'ID del libro appena creato
         $author->save();
 
         // Supponendo che tu voglia creare una nuova categoria e associarla al libro appena creato
         $category = new Category();
-        $category->name = $request->category; // o qualsiasi altro campo hai per la categoria
-        $category->book_id = $book->id; // Associa l'ID del libro appena creato
+        $category->name = $request->category;  // o qualsiasi altro campo hai per la categoria
+        $category->book_id = $book->id;  // Associa l'ID del libro appena creato
         $category->save();
 
         return redirect('/books');
     }
-
-
-
 
     /**
      * Display the specified resource.
@@ -66,7 +64,7 @@ class BookController extends Controller
     public function show(Book $book)
     {
         $book = Book::with('authors', 'categories', 'reservations')->findOrFail($book->id);
-        //return $book;
+        // return $book;
         return view('detailpage', ['book' => $book]);
     }
 
@@ -108,14 +106,13 @@ class BookController extends Controller
         // Aggiorna anche la tabella authors
         $book->authors()->update([
             'name' => $request->author,
-            'city' => $request->city, // Assumendo che tu abbia un campo city nell'autore
+            'city' => $request->city,  // Assumendo che tu abbia un campo city nell'autore
             'updated_at' => now(),
         ]);
 
         // Reindirizza alla pagina desiderata dopo l'aggiornamento
         return redirect('/books')->with('success', 'Libro aggiornato con successo!');
     }
-
 
     /**
      * Remove the specified resource from storage.
