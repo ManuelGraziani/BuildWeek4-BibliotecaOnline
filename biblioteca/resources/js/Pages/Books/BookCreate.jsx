@@ -104,6 +104,7 @@ export default function BookCreate() {
                             Pagine
                         </label>
                         <input
+                            type="number"
                             id="pages"
                             value={values.pages}
                             onChange={handleChange}
@@ -114,6 +115,9 @@ export default function BookCreate() {
                             Numero copie
                         </label>
                         <input
+                            min='1'
+                            max='5'
+                            type="number"
                             id="numcopies"
                             value={values.numcopies}
                             onChange={handleChange}
