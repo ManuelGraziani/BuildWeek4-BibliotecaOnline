@@ -8,6 +8,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BookController extends Controller
@@ -17,7 +18,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Books/BookComponent', ['books' => Book::with('authors', 'categories', 'reservations')->get(), 'users' => User::all()]);
+        return Inertia::render('Books/BookComponent', ['books' => Book::with('authors', 'categories', 'reservations')->get(), 'users' => Auth::user()]);
 
         // return view('books', ['books' => Book::with('authors', 'categories', 'reservations')->get(), 'users' => User::all()]);
     }
